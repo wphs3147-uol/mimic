@@ -47,6 +47,23 @@ def mimic_dict(filename):
 
     return mimic
 
+def print_mimic(mimic, word, num_words=200):
+    """
+    Given a mimic dictionary and a starting word, prints `num_words` of text.
+    The next word is chosen randomly from the list of words that follow the current word.
+    If the current word has no entry in the dictionary, it falls back to the empty string key.
+    """
+    for i in range(num_words):
+        print(word, end=' ')  # Print the word without a newline
+        next_words = mimic.get(word)
+
+        if not next_words:  # If no next words, fallback
+            next_words = mimic.get('', [])
+
+        word = random.choice(next_words)  # Choose a random next word
+
+    print("\n")  # Print a newline at the end
+
 # Run the functions on shortStory.txt
 filename = "shortStory.txt"
 
@@ -59,3 +76,7 @@ mimic = mimic_dict(filename)
 print("\nMimic dictionary (first 5 keys):")
 for key in list(mimic.keys())[:5]:  # Show only first 5 for brevity
     print(f"'{key}': {mimic[key]}")
+
+# Generate random text using the mimic dictionary
+print("\nGenerated Random Text:")
+print_mimic(mimic, word)  # Start with the most common word
